@@ -34,17 +34,15 @@ func Combinations(ctx context.Context, set []interface{}, repeat int) chan []int
 			}
 			ch <- pair
 
-			idx, ok := func() (int, bool) {
-				for i := len(pos) - 1; i > -1; i-- {
-					if pos[i] != i+len(set)-repeat {
-						return i, true
-					}
+			idx := 0
+			for i := len(pos) - 1; i > -1; i-- {
+				if pos[i] != i+len(set)-repeat {
+					idx = i
+					break
 				}
-				return 0, false
-			}()
-
-			if !ok {
-				return
+				if i == 0 {
+					return
+				}
 			}
 
 			pos[idx]++
