@@ -80,17 +80,10 @@ func Multicombinations(ctx context.Context, set []interface{}, repeat int) chan 
 			}
 			ch <- pair
 
-			ok := func() bool {
-				for i := 0; i < repeat; i++ {
-					if pos[i] != len(set)-1 {
-						return true
-					}
+			for i := 0; i < repeat && pos[i] == len(set)-1; i++ {
+				if i == repeat-1 {
+					return
 				}
-				return false
-			}()
-
-			if !ok {
-				break
 			}
 
 			for i := 0; i < repeat; i++ {
